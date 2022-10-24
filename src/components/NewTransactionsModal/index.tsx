@@ -26,11 +26,11 @@ export function NewTransactionsModal() {
 
           <TransactionType>
             <TransactionTypeButton value="deposit" variant="deposit">
-              <ArrowCircleUp size={24} color="#00B37E" />
+              <ArrowCircleUp size={24} />
               <span>Deposit</span>
             </TransactionTypeButton>
             <TransactionTypeButton value="withdraw" variant="withdraw">
-              <ArrowCircleDown size={24} color="#F75A68" />
+              <ArrowCircleDown size={24} />
               <span>Withdraw</span>
             </TransactionTypeButton>
           </TransactionType>
