@@ -13,8 +13,16 @@
       "description": "Pizza",
       "type": "outcome",
       "category": "food",
-      "price": 80,
+      "price": 800,
       "createdAt": "2022-10-24T13:15:49.088Z"
+    },
+    {
+      "id": 3,
+      "description": "Vendita Casa",
+      "type": "income",
+      "category": "Business",
+      "price": 800000,
+      "createdAt": "2022-10-25T13:15:49.088Z"
     }
   ]
 }
