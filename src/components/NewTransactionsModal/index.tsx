@@ -1,4 +1,7 @@
 import * as Dialog from '@radix-ui/react-dialog'
+import { useForm } from 'react-hook-form'
+import * as z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { ArrowCircleDown, ArrowCircleUp, X } from 'phosphor-react'
 import {
   CloseButton,
@@ -8,7 +11,27 @@ import {
   TransactionTypeButton,
 } from './styles'
 
+const newTransactionFormSchema = z.object({
+  description: z.string(),
+  price: z.number(),
+  category: z.enum(['income', 'outcome']),
+})
+
+type SearchFormInputsProps = z.infer<typeof newTransactionFormSchema>
+
 export function NewTransactionsModal() {
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<SearchFormInputsProps>({
+    resolver: zodResolver(newTransactionFormSchema),
+  })
+
+  async function handleCreateNewTransaction(data: SearchFormInputsProps) {
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+    console.log(data)
+  }
   return (
     <Dialog.Portal>
       <Overlay />
@@ -19,10 +42,18 @@ export function NewTransactionsModal() {
           <X size={24} color="#7C7C8A" />
         </CloseButton>
 
-        <form>
-          <input type="text" placeholder="Description" />
-          <input type="text" placeholder="Price" />
-          <input type="text" placeholder="Category" />
+        <form onSubmit={handleSubmit(handleCreateNewTransaction)}>
+          <input
+            type="text"
+            placeholder="Description"
+            {...register('description')}
+          />
+          <input
+            type="text"
+            placeholder="Price"
+            {...register('price', { valueAsNumber: true })}
+          />
+          <input type="text" placeholder="Category" {...register('category')} />
 
           <TransactionType>
             <TransactionTypeButton value="deposit" variant="deposit">
@@ -34,7 +65,9 @@ export function NewTransactionsModal() {
               <span>Withdraw</span>
             </TransactionTypeButton>
           </TransactionType>
-          <button type="submit">Register</button>
+          <button type="submit" disabled={isSubmitting}>
+            Register
+          </button>
         </form>
       </Content>
     </Dialog.Portal>
